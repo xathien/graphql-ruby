@@ -130,6 +130,10 @@ schema {
 
 directive @foo(arg: InputA) on FIELD
 
+type Hello {
+  int: Int
+}
+
 input InputA {
   value: InputB
 }

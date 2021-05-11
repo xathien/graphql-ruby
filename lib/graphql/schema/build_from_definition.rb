@@ -50,7 +50,7 @@ module GraphQL
           directive_type_resolver = build_resolve_type(GraphQL::Schema::BUILT_IN_TYPES, directives, ->(type_name) {
             types[type_name] ||= begin
               defn = document.definitions.find { |d| d.respond_to?(:name) && d.name == type_name }
-              build_definition_from_node(defn, directive_type_resolver, default_resolve)
+              build_definition_from_node(defn, type_resolver, default_resolve)
             end
           })
 
