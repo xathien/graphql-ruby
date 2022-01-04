@@ -33,3 +33,5 @@ javascript_client/subscriptions
 javascript_client/sync
 javascript_client/cli*
 javascript_client/index*
+coverage
+spec/ci

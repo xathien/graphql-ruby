@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 require "graphql"
-require "jazz"
+require "support/jazz"
 require "benchmark/ips"
 require "stackprof"
 require "memory_profiler"
-require "graphql/batch"
 
 module GraphQLBenchmark
   QUERY_STRING = GraphQL::Introspection::INTROSPECTION_QUERY
@@ -49,7 +48,7 @@ module GraphQLBenchmark
     end
   end
 
-  def self.validate_memory
+  def self.validate_memory(full_report: false)
     FIELDS_WILL_MERGE_SCHEMA.validate(FIELDS_WILL_MERGE_QUERY)
 
     report = MemoryProfiler.report do
@@ -57,7 +56,11 @@ module GraphQLBenchmark
       nil
     end
 
-    report.pretty_print
+    if full_report
+      report
+    else
+      report.pretty_print
+    end
   end
 
   def self.profile
@@ -87,11 +90,26 @@ module GraphQLBenchmark
     end
     StackProf::Report.new(result).print_text
 
+
+    memory_profile_large_result(already_warm: true)
+  end
+
+  def self.memory_profile_large_result(already_warm: false, full_report: false)
+    schema = ProfileLargeResult::Schema
+    document = ProfileLargeResult::ALL_FIELDS
+    if !already_warm
+      schema.execute(document: document)
+    end
+
     report = MemoryProfiler.report do
       schema.execute(document: document)
     end
 
-    report.pretty_print
+    if full_report
+      report
+    else
+      report.pretty_print
+    end
   end
 
   module ProfileLargeResult
@@ -156,6 +174,7 @@ module GraphQLBenchmark
   end
 
   def self.profile_batch_loaders
+    require "graphql/batch"
     require_relative "./batch_loading"
     include BatchLoading
 
