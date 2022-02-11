@@ -1,31 +1,62 @@
 ---
 ---
 
+/*
+TODO:
+- pro/experimental/enterprise call-outs
+- code
+- TOC
+- dark tweaks for lower contrast
+- make sure it still looks good in light mode
+*/
 @import "reset";
 
-$brand-color: #a5152a;
-$brand-color-light:  #ed8090;
-$brand-color-extralight:  #f9e8ee;
 $experimental-background: #fff7cf;
 $experimental-color: #655400;
 $pro-color: #406db5;
 $pro-background: #f1f4f9;
 $enterprise-color: #238c44;
 $enterprise-background: #ebf7ee;
-$faint-color: #f0f0f0;
-$code-border: #d6d6d6;
-$code-background: #fafafa;
-$code-color: #777777;
-$code-border-radius: 2px;
-$muted-color: #777777;
-$subtle-color: #aaaaaa;
-$font: 'Rubik', sans-serif;
-$font-color: black;
-$code-font: 'Monaco', monospace;
+
+:root {
+  --brand-color: #a5152a;
+  --brand-color-rgb: 165, 21, 42;
+  --brand-color-light:  #ed8090;
+  --background-color: #fafafa;
+  --text-background-color: white;
+  --faint-color: #f0f0f0;
+  --code-border: #d6d6d6;
+  --code-background: #fafafa;
+  --code-color: #777777;
+  --code-border-radius: 2px;
+  --muted-color: #777777;
+  --subtle-color: #aaaaaa;
+  --font: 'Rubik', sans-serif;
+  --font-color: black;
+  --code-font: 'Monaco', monospace;
+  --header-shadow-color: #d6d6d6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #0f0f0f;
+    --text-background-color: black;
+    --faint-color: #f0f0f0;
+    --code-border: #d6d6d6;
+    --code-background: #fafafa;
+    --code-color: #dddddd;
+    --code-border-radius: 2px;
+    --muted-color: #dddddd;
+    --subtle-color: #aaaaaa;
+    --font-color: white;
+    --header-shadow-color: black;
+  }
+}
 
 body {
-  font-family: $font;
-  background: #fafafa;
+  font-family: var(--font);
+  background: var(--background-color);
+  color: var(--font-color);
 }
 
 strong, b {
@@ -39,10 +70,10 @@ strong, b {
 }
 
 .header {
-  box-shadow: 0px 0px 10px 0px #d6d6d6;
+  box-shadow: 0px 0px 10px 0px var(--header-shadow-color);
   z-index: 1;
   position: relative;
-  background: white;
+  background: var(--text-background-color);
   .nav {
     $height: 30px;
     $margin: 10px;
@@ -95,15 +126,15 @@ strong, b {
   max-width: 1000px;
   margin: 0px auto;
   padding: 10px 20px;
-  background: white;
+  background: var(--text-background-color);
 }
 
 pre {
-  font-family: $code-font;
+  font-family: var(--code-font);
   padding: 0.5rem;
-  border: 1px solid $code-border;
-  border-radius: $code-border-radius;
-  background-color: $code-background;
+  border: 1px solid var(--code-border);
+  border-radius: var(--code-border-radius);
+  background-color: var(--code-background);
   margin: 10px 0px;
   overflow-x: auto;
   line-height: 1.4rem;
@@ -128,8 +159,8 @@ ul {
 }
 
 code {
-  font-family: $code-font;
-  color: $code-color;
+  font-family: var(--code-font);
+  color: var(--code-color);
   font-weight: 400;
 }
 .code .line-numbers {
@@ -138,12 +169,12 @@ code {
 
 
 a {
-  color: $brand-color;
-  border-color: $brand-color;
+  color: var(--brand-color);
+  border-color: var(--brand-color);
 }
 a:hover, a:hover code {
-  color: white;
-  background-color: $brand-color;
+  color: var(--background-color);
+  background-color: var(--brand-color);
 }
 
 #readme img {
@@ -198,7 +229,7 @@ a:hover, a:hover code {
 
 .guides {
   .guide-desc {
-    color: $muted-color;
+    color: var(--muted-color);
     margin-left: 5px;
   }
 
@@ -211,7 +242,7 @@ a:hover, a:hover code {
 @mixin doc-header($color, $background-color) {
   background-color: $background-color;
   color: $color;
-  border-radius: $code-border-radius;
+  border-radius: var(--code-border-radius);
   padding: 10px 10px 10px 10px;
   margin-bottom: 10px;
   border: 1px solid $color;
@@ -241,10 +272,10 @@ a:hover, a:hover code {
 }
 
 .guide-footer {
-  background: $brand-color-extralight;
+  background: rgba(var(--brand-color-rgb), 0.2);
   margin: 25px 0px 0px 0px;
   padding: 10px;
-  border-radius: $code-border-radius;
+  border-radius: var(--code-border-radius);
 }
 
 .hero {
@@ -265,11 +296,11 @@ a:hover, a:hover code {
     padding: 10px;
 
     &.shaded {
-      background: $faint-color;
+      background: var(--faint-color);
     }
 
     h2 {
-      color: $brand-color;
+      color: var(--brand-color);
       text-shadow: #cccccc 1px 1px 1px;
       font-size: 1.4em;
     }
@@ -318,7 +349,7 @@ table {
   margin: 0px 0px 15px 0px;
   thead {
     text-align: left;
-    border-bottom: 1px solid $subtle-color;
+    border-bottom: 1px solid var(--subtle-color);
   }
   td, th {
     padding: 5px 10px 5px 0px;
@@ -329,7 +360,7 @@ table {
   font-size: 1em;
   padding: 5px;
   margin: 10px;
-  border: 1px solid $subtle-color;
+  border: 1px solid var(--subtle-color);
   border-radius: 3px;
   // make it float right in a flex container
   margin-left: auto;
@@ -338,7 +369,7 @@ table {
 .search-results-container {
   $bg: #eaeaea;
   $bg-highlight: #f9f9f9;
-  background-color: $bg;
+  background-color: var(--bg);
 
   #search-results {
     $fade-time: 0.1s;
@@ -348,7 +379,7 @@ table {
     margin: 0 auto;
     .search-result {
       text-decoration: none;
-      color: $font-color;
+      color: var(--font-color);
       padding: 6px 10px 0px 6px;
       line-height: 18px;
       border-bottom: 2px solid transparent;
@@ -361,15 +392,15 @@ table {
       }
 
       .search-preview {
-        color: $subtle-color;
+        color: var(--subtle-color);
       }
       .search-category {
-        border: 1px solid $brand-color;
+        border: 1px solid var(--brand-color);
         border-radius: 3px;
         margin: 0 8px 0 0;
         padding: 3px;
         font-size: 0.7em;
-        color: $brand-color;
+        color: var(--brand-color);
         position: relative;
         top: -3px;
       }
@@ -377,20 +408,20 @@ table {
       &:focus, &:hover {
         outline: none;
         .search-title {
-          color: $brand-color;
+          color: var(--brand-color);
         }
-        background-color: $bg-highlight;
+        background-color: var(--bg-highlight);
       }
 
       &:hover {
-        border-bottom-color: $brand-color;
+        border-bottom-color: var(--brand-color);
       }
     }
   }
 }
 
 ul.breadcrumb {
-  color: $muted-color;
+  color: var(--muted-color);
 
   li {
     display: inline;
@@ -412,10 +443,10 @@ ul.breadcrumb {
     -webkit-appearance: none;
     appearance: none;
     padding: 5px 20px 5px 5px;
-    border: 1px solid $code-border;
+    border: 1px solid var(--code-border);
     border-radius: 5px;
     background-color: transparent;
-    color: $brand-color;
+    color: var(--brand-color);
     font-size: 16px;
     font-weight: 500;
     line-height: 1.3;
@@ -445,12 +476,12 @@ ul.breadcrumb {
 
 .table-of-contents {
   float: right;
-  border: 1px solid $subtle-color;
+  border: 1px solid var(--subtle-color);
   border-radius: 3px;
   padding: 15px;
   margin: 0 10px 10px 10px;
   width: 300px;
-  background: $code-background;
+  background: var(--code-background);
   .contents-header {
     margin: 0 0 5px 20px;
   }
@@ -462,7 +493,7 @@ ul.breadcrumb {
       margin-left: 0;
 
       .section-count {
-        color: $muted-color;
+        color: var(--muted-color);
         width: 20px;
         display: inline-block;
       }
