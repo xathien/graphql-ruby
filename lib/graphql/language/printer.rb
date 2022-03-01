@@ -162,7 +162,11 @@ module GraphQL
       end
 
       def print_object_type_definition(object_type)
-        out = print_description(object_type)
+        out = if !object_type.extension?
+          print_description(object_type)
+        else
+          "extend ".dup
+        end
         out << "type #{object_type.name}"
         out << print_implements(object_type) unless object_type.interfaces.empty?
         out << print_directives(object_type.directives)
@@ -333,7 +337,7 @@ module GraphQL
           print_schema_definition(node)
         when Nodes::ScalarTypeDefinition
           print_scalar_type_definition(node)
-        when Nodes::ObjectTypeDefinition
+        when Nodes::ObjectTypeDefinition, Nodes::ObjectTypeExtension
           print_object_type_definition(node)
         when Nodes::InputValueDefinition
           print_input_value_definition(node)

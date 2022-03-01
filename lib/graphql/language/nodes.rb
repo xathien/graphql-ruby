@@ -123,6 +123,10 @@ module GraphQL
           copy_of_self
         end
 
+        def extension?
+          false
+        end
+
         protected
 
         def merge!(new_options)
@@ -612,7 +616,12 @@ module GraphQL
         self.children_method_name = :definitions
       end
 
+      module TypeExtension
+        def extension?; true; end
+      end
+
       class ObjectTypeExtension < AbstractNode
+        include TypeExtension
         scalar_methods :name, :interfaces
         children_methods({
           directives: GraphQL::Language::Nodes::Directive,
